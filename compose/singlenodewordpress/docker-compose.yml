@@ -1,0 +1,11 @@
+wordpress:
+  image: wordpress
+  ports:
+   - "8080:80"
+  environment:
+    WORDPRESS_DB_HOST: "composeword_mysql_1:3306"
+    WORDPRESS_DB_PASSWORD: mysql
+mysql:
+  image: mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: mysql
