@@ -12,3 +12,6 @@ docker-compose --x-networking --project-name=counter --x-network-driver=overlay 
 
 apache directory:
 Dockerfile for apache application
+
+haproxy directory:
+haproxy configuration for load balancing between 3 nginx containers
