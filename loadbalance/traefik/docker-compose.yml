@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  traefik:
+    image: traefik
+    command: --web --docker --docker.swarmmode --docker.domain=traefik --docker.watch
+    networks:
+      - tnet
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  vote:
+    image: instavote/vote
+    deploy:
+      replicas: 2
+      labels:
+        - "traefik.port=80"
+        - "traefik.frontend.rule=Host:traefik; PathPrefixStrip: /vote"
+    networks:
+      - tnet
+
+  web:
+    image: nginx:latest
+    deploy:
+      replicas: 2
+      labels:
+        - "traefik.port=80"
+        - "traefik.frontend.rule=Host:traefik; PathPrefixStrip: /web"
+    networks:
+      - tnet
+
+networks:
+  tnet:
+    driver: overlay

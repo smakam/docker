@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  vote:
+    image: instavote/vote
+    deploy:
+      replicas: 2
+    networks: 
+      - mynetwork
+
+  client:
+    image: smakam/myubuntu:v4
+    command: [sleep, infinity]
+    networks: 
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: overlay
